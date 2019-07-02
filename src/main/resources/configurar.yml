@@ -1,0 +1,11 @@
+Tag-Clan: "&7[%clan%&7]"
+Tags:
+  Diretor:
+  # A prioridade é de 0 pra cima (0,1,2,3,4) quanto menor o número mais prioridade ele vai ter no Tablist
+    Priority: 0
+    Tag: '&6[Diretor] '
+    Permissao: 'tag.diretor'
+  Membro:
+    Priority: 1
+    Tag: '&7[Membro] '
+    Permissao: 'tag.membro'

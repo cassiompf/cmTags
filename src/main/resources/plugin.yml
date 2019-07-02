@@ -1,0 +1,7 @@
+name: CmTags
+version: ${project.version}
+main: gmail.fopypvp174.cmtags.CmTags
+depend: [PermissionsEx]
+softdepend: [SimpleClans]
+authors: [C4ssi0]
+description: Plugin de tags para seu servidor

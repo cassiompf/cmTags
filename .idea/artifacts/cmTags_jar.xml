@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="cmTags:jar">
+    <output-path>$PROJECT_DIR$/../../Servidores/Spigot1.8.8/plugins</output-path>
+    <root id="archive" name="cmTags.jar">
+      <element id="module-output" name="cmTags" />
+    </root>
+  </artifact>
+</component>
