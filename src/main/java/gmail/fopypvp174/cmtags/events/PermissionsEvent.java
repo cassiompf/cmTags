@@ -15,21 +15,21 @@ public class PermissionsEvent implements Listener {
         this.cmTags = cmTags;
     }
 
-    @EventHandler
     @Deprecated
-    public void permissionsEvent(PermissionEntityEvent e) {
-        cmTags.atualizarScore();
-    }
-
     @EventHandler
-    @Deprecated
     public void permissionsEvent(PermissionSystemEvent e) {
         cmTags.atualizarScore();
     }
 
-
-    @EventHandler
     @Deprecated
+    @EventHandler
+    public void permissionsEvent(PermissionEntityEvent e) {
+        cmTags.atualizarScore();
+    }
+
+
+    @Deprecated
+    @EventHandler
     public void playerJoin(PlayerJoinEvent e) {
         cmTags.atualizarScore();
     }

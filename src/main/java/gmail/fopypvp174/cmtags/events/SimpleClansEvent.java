@@ -17,26 +17,26 @@ public class SimpleClansEvent implements Listener {
         this.cmTags = cmTags;
     }
 
-    @EventHandler
     @Deprecated
+    @EventHandler
     public void createClan(CreateClanEvent e) {
         cmTags.atualizarScore();
     }
 
-    @EventHandler
     @Deprecated
+    @EventHandler
     public void disbandClan(DisbandClanEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(cmTags, () -> cmTags.atualizarScore(), 60L);
     }
 
-    @EventHandler
     @Deprecated
+    @EventHandler
     public void playerKikedClan(PlayerKickedClanEvent e) {
         cmTags.atualizarScore();
     }
 
-    @EventHandler
     @Deprecated
+    @EventHandler
     public void playerJoinClan(PlayerJoinedClanEvent e) {
         cmTags.atualizarScore();
     }

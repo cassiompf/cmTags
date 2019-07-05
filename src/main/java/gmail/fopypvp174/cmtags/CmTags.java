@@ -42,25 +42,48 @@ public class CmTags extends JavaPlugin {
         config.getCustomConfig().getConfigurationSection("Tags").getKeys(false).forEach(grupoName -> {
             grupos.add(new Grupos(grupoName,
                     config.getCustomConfig().getString("Tags." + grupoName + ".Permissao"),
-                    config.getCustomConfig().getString("Tags." + grupoName + ".Tag"),
+                    config.getCustomConfig().getString("Tags." + grupoName + ".Preffix"),
+                    config.getCustomConfig().getString("Tags." + grupoName + ".Suffix"),
                     config.getCustomConfig().getInt("Tags." + grupoName + ".Priority")));
         });
     }
 
 
-    private String fazerTeam(Grupos grupo) {
+    private String fazerTeam(Player player, Grupos grupo) {
         StringBuilder nomeGrupo = new StringBuilder(4 + grupo.getNome().length());
         double priority = grupo.getPrioridade();
+
+        SimpleClans sc = SimpleClans.getInstance();
+
+        String tagClan = "";
+
+        if (config.getCustomConfig().getBoolean("Organizar_por_tag")) {
+            int tamanhoConfig = sc.getSettingsManager().getTagMaxLength();
+            for (int i = 0; i < tamanhoConfig; i++) {
+                tagClan += "Z";
+            }
+
+            if (sc.getClanManager().getClanPlayer(player) != null) {
+                tagClan = sc.getClanManager().getClanPlayer(player).getClan().getTag();
+
+                int tamanhoTag = sc.getClanManager().getClanPlayer(player).getClan().getTag().length();
+
+                for (int i = 0; i < (tamanhoConfig - tamanhoTag); i++) {
+                    tagClan += "Z";
+                }
+
+            }
+        }
 
         int casasPriority = 1;
         while ((priority = priority / 10) > 1) {
             casasPriority++;
         }
-        for (int i = 0; i < (4 - casasPriority); i++) {
+        for (int i = 0; i < (2 - casasPriority); i++) {
             nomeGrupo.append("0");
         }
 
-        nomeGrupo.append(grupo.getPrioridade().toString()).append(grupo.getNome());
+        nomeGrupo.append(grupo.getPrioridade()).append(tagClan).append(player.getName());
 
         if (nomeGrupo.length() > 16) {
             nomeGrupo.substring(0, 16);
@@ -71,17 +94,18 @@ public class CmTags extends JavaPlugin {
 
     @Deprecated
     public void atualizarScore() {
-        Bukkit.getOnlinePlayers().forEach(all -> {
+        for (Player all : Bukkit.getOnlinePlayers()) {
+
             Scoreboard scoreboard = all.getScoreboard();
 
-            Bukkit.getOnlinePlayers().forEach(all2 -> {
+            for (Player all2 : Bukkit.getOnlinePlayers()) {
 
                 for (Grupos grupo : grupos) {
                     if (all2.hasPermission(grupo.getPermissao())) {
 
-                        String teamName = fazerTeam(grupo);
-                        String preffix = ChatColor.translateAlternateColorCodes('&', grupo.getTag());
-                        String suffix = getClan(all2);
+                        String teamName = fazerTeam(all2, grupo);
+                        String preffix = ChatColor.translateAlternateColorCodes('&', grupo.getPreffix());
+                        String suffix = getClan(all2, grupo);
 
                         Team team = scoreboard.getTeam(teamName);
 
@@ -105,19 +129,22 @@ public class CmTags extends JavaPlugin {
                         break;
                     }
                 }
-            });
+
+            }
             all.setScoreboard(scoreboard);
-        });
+        }
 
     }
 
-    private String getClan(Player player) {
+    private String getClan(Player player, Grupos grupo) {
         if (getServer().getPluginManager().getPlugin("SimpleClans") != null) {
             SimpleClans sc = SimpleClans.getInstance();
             if (sc.getClanManager().getClanPlayer(player) != null) {
                 String tagClan = sc.getClanManager().getClanPlayer(player).getClan().getColorTag();
-                String tagConfig = ChatColor.translateAlternateColorCodes('&', config.getCustomConfig().getString("Tag-Clan").replace("%clan%", tagClan));
-                return "§r " + tagConfig;
+                String tagConfig = config.getCustomConfig().getString("Tags." + grupo.getNome() +
+                        ".Suffix").replace("%clan%", tagClan);
+                String suffix = ChatColor.translateAlternateColorCodes('&', tagConfig);
+                return "§r " + suffix;
             }
         }
         return "§r";

@@ -1,11 +1,23 @@
-Tag-Clan: "&7[%clan%&7]"
+# Organizar o tablist pela tag do clan!
+# Quando ativado o jogador que tiver clan
+# aparecerá primeiro no tablist e os
+# jogadores que não tiver clan irão vir depois.
+# Lembrando: Quando ativado o tablist é organizado
+# primeiro pela sequência de prioridade e depois
+# organizado pela tag do clan!
+Organizar_por_tag: true
+
+# A configuração suporta apenas 99 tags!
 Tags:
   Diretor:
-  # A prioridade é de 0 pra cima (0,1,2,3,4) quanto menor o número mais prioridade ele vai ter no Tablist
+    # A prioridade é de 0 pra cima (0,1,2,3,4)
+    # quanto menor o número mais prioridade ele vai ter no Tablist
     Priority: 0
-    Tag: '&6[Diretor] '
+    Preffix: '&6[Diretor] '
+    Suffix: '&7[%clan%&7]'
     Permissao: 'tag.diretor'
   Membro:
     Priority: 1
-    Tag: '&7[Membro] '
+    Preffix: '&7[Membro] '
+    Suffix: '&7[%clan%&7]'
     Permissao: 'tag.membro'

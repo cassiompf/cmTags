@@ -4,14 +4,16 @@ public class Grupos {
 
     private String nome;
     private String permissao;
-    private String tag;
+    private String preffix;
+    private String suffix;
     private Integer prioridade;
 
-    public Grupos(String nome, String permission, String tag, Integer priority) {
+    public Grupos(String nome, String permissao, String preffix, String suffix, Integer prioridade) {
         this.nome = nome;
-        this.permissao = permission;
-        this.tag = tag;
-        this.prioridade = priority;
+        this.permissao = permissao;
+        this.preffix = preffix;
+        this.suffix = suffix;
+        this.prioridade = prioridade;
     }
 
     public String getNome() {
@@ -22,8 +24,12 @@ public class Grupos {
         return permissao;
     }
 
-    public String getTag() {
-        return tag;
+    public String getPreffix() {
+        return preffix;
+    }
+
+    public String getSuffix() {
+        return suffix;
     }
 
     public Integer getPrioridade() {
